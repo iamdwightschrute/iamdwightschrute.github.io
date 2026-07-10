@@ -1,12 +1,572 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deeksha Singh</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+<!-- ============================================================
+     EDIT: page title + description (browser tab + link preview)
+     ============================================================ -->
+<title>Deeksha Singh — Data & Product</title>
+<meta name="description" content="Deeksha Singh builds data systems that drive product and business decisions.">
+<meta property="og:title" content="Deeksha Singh — Data & Product">
+<meta property="og:description" content="I build data systems that drive product and business decisions.">
+<meta property="og:type" content="website">
+ 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+ 
+<style>
+/* ============================================================
+   DESIGN TOKENS — change one value here to restyle the page
+   ============================================================ */
+:root{
+  --paper:#F5F6FA;        /* cool off-white page background */
+  --card:#FFFFFF;         /* white cards */
+  --ink:#12141A;          /* main text */
+  --ink-soft:#565B66;     /* secondary text */
+  --ink-mute:#8A8E99;     /* muted labels */
+  --line:#E3E5EC;         /* hairline borders */
+  --accent:#2440DB;       /* primary: cobalt */
+  --accent-soft:#E6EAFB;  /* cobalt tint background */
+  --accent2:#DA5A32;      /* secondary: coral, used sparingly */
+  --accent2-soft:#FBE4DC; /* coral tint */
+ 
+  --display:'Fraunces', Georgia, serif;
+  --body:'Instrument Sans', system-ui, sans-serif;
+  --mono:'JetBrains Mono', monospace;
+ 
+  --wrap:860px;
+}
+ 
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--body); font-size:16px; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;}
+ 
+.wrap{max-width:var(--wrap); margin:0 auto; padding:0 24px;}
+section{padding:60px 0;}
+.divide{border-top:1px solid var(--line);}
+ 
+/* Section eyebrow: small accent tick + mono label */
+.eyebrow{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--mono); font-size:12px; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--ink-mute); margin:0 0 24px;
+}
+.eyebrow::before{content:""; width:22px; height:2px; background:var(--accent2);}
+ 
+/* ---------- CATEGORICAL COLOR SYSTEM ----------
+   Each project type gets a colour. Add a class (c-blue, c-teal, etc.)
+   to a card and its icon, tag, and accents pick up that colour. */
+.c-blue{--c:#2E5BEC; --c-soft:#E7ECFD;}
+.c-teal{--c:#0E8E82; --c-soft:#DCF1EF;}
+.c-amber{--c:#BE7A0F; --c-soft:#FAECD3;}
+.c-coral{--c:#D2532F; --c-soft:#FBE6DF;}
+.c-violet{--c:#6E49CE; --c-soft:#ECE6FB;}
+.c-green{--c:#218A4B; --c-soft:#DDF1E4;}
+ 
+/* ---------- HERO ---------- */
+.hero{padding-top:76px; padding-bottom:0;}
+.hero .name{font-family:var(--mono); font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 24px;}
+.hero h1{font-family:var(--display); font-weight:500; font-size:clamp(30px,6vw,50px); line-height:1.1; letter-spacing:-0.01em; margin:0 0 20px; max-width:16ch;}
+.hero .lead{font-size:18px; color:var(--ink-soft); max-width:52ch; margin:0 0 28px;}
+.links{display:flex; gap:12px; flex-wrap:wrap;}
+.btn{display:inline-flex; align-items:center; gap:8px; font-size:14px; text-decoration:none; padding:9px 16px; border:1px solid var(--ink); border-radius:2px; transition:background .15s,color .15s;}
+.btn:hover{background:var(--ink); color:var(--paper);}
+.btn svg{width:16px; height:16px;}
+ 
+.kpis{display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); border-radius:4px; margin-top:48px; background:var(--card); overflow:hidden;}
+.kpi{padding:20px 22px; border-right:1px solid var(--line); border-top:3px solid var(--c,var(--accent));}
+.kpi:nth-child(3n){border-right:none;}
+.kpi .num{font-family:var(--mono); font-size:26px; font-weight:500; color:var(--c,var(--ink));}
+.kpi .lbl{font-size:13px; color:var(--ink-soft); margin-top:4px;}
+ 
+/* ---------- ABOUT ---------- */
+.about p{font-size:18px; max-width:60ch; color:var(--ink-soft); margin:0;}
+ 
+/* ---------- CASE STUDY PROJECTS ---------- */
+.projects{display:flex; flex-direction:column; gap:16px;}
+.project{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:28px 30px; transition:border-color .15s;}
+.project:hover{border-color:var(--ink-mute);}
+.thumb{width:52px; height:52px; background:var(--c-soft,var(--accent-soft)); border-radius:10px; margin-bottom:20px; display:flex; align-items:center; justify-content:center; color:var(--c,var(--accent));}
+.project.feature .thumb{width:56px; height:56px;}
+.thumb svg{width:28px; height:28px;}
+.project.feature .thumb svg{width:30px; height:30px;}
+.glyph{width:40px; height:40px; margin-bottom:16px; color:var(--c,var(--accent));}
+.glyph svg{width:100%; height:100%;}
+.tagrow{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px;}
+.tag{font-family:var(--mono); font-size:12px; color:var(--c,var(--accent)); background:var(--c-soft,var(--accent-soft)); padding:3px 10px; border-radius:3px;}
+.stack{font-family:var(--mono); font-size:12px; color:var(--ink-soft);}
+.project h3{font-family:var(--display); font-weight:500; font-size:24px; margin:0 0 18px;}
+.pdr{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+.pdr .k{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; color:var(--ink-mute); margin-bottom:6px;}
+.pdr .k.hl{color:var(--c,var(--accent));}
+.pdr .k.hl::after{content:" ●"; font-size:8px; vertical-align:2px;}
+.pdr p{font-size:14px; line-height:1.6; color:var(--ink-soft); margin:0;}
+.project.feature{border-color:var(--accent);}
+.badge-pc{font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#fff; background:var(--accent); padding:3px 10px; border-radius:3px;}
+.project .lead2{font-size:15px; color:var(--ink); margin:0 0 20px; max-width:66ch;}
+.narrative{margin-top:22px; padding-top:20px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:14px;}
+.narrative p{font-size:14px; line-height:1.65; color:var(--ink-soft); margin:0; max-width:70ch;}
+.narrative strong{color:var(--ink); font-weight:500;}
+.narrative .next{font-family:var(--mono); font-size:12px; color:var(--ink-mute);}
+ 
+/* ---------- MORE PROJECTS (compact grid) ---------- */
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;}
+.mini{display:flex; flex-direction:column; background:var(--card); border:1px solid var(--line); border-radius:6px; padding:22px 24px; text-decoration:none; transition:transform .15s,border-color .15s;}
+.mini:hover{transform:translateY(-3px); border-color:var(--ink-mute);}
+.mini .mtag{font-family:var(--mono); font-size:11px; color:var(--c,var(--accent)); margin-bottom:12px;}
+.mini h4{font-family:var(--display); font-weight:500; font-size:18px; margin:0 0 8px;}
+.mini p{font-size:13px; line-height:1.55; color:var(--ink-soft); margin:0 0 16px; flex:1;}
+.mini .go{font-family:var(--mono); font-size:12px; color:var(--ink); display:inline-flex; align-items:center; gap:5px;}
+.mini .go svg{width:13px; height:13px;}
+ 
+/* ---------- ASK (signature) ---------- */
+.ask-box{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:28px 30px;}
+.ask-input{display:flex; align-items:center; gap:10px; border:1px solid var(--ink-mute); border-radius:4px; padding:11px 14px; background:var(--paper);}
+.ask-input:focus-within{border-color:var(--accent);}
+.ask-input svg{width:18px; height:18px; color:var(--ink-mute); flex-shrink:0;}
+.ask-input input{flex:1; border:none; background:transparent; outline:none; font-family:var(--body); font-size:15px; color:var(--ink);}
+.ask-input button{font-family:var(--body); font-size:14px; cursor:pointer; padding:6px 15px; border:1px solid var(--accent); color:var(--accent); background:transparent; border-radius:3px; transition:background .15s,color .15s;}
+.ask-input button:hover{background:var(--accent); color:#fff;}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+.chip{font-family:var(--body); font-size:13px; cursor:pointer; padding:5px 13px; border:1px solid var(--line); background:transparent; color:var(--ink-soft); border-radius:20px; transition:border-color .15s;}
+.chip:hover{border-color:var(--ink-mute);}
+.answer{margin-top:22px; padding-top:20px; border-top:1px solid var(--line); font-size:15px; line-height:1.7; color:var(--ink);}
+ 
+/* ---------- EXPERIENCE (timeline) ---------- */
+.timeline{position:relative; padding-left:26px;}
+.timeline::before{content:""; position:absolute; left:4px; top:6px; bottom:6px; width:1px; background:var(--line);}
+.job{position:relative; padding-bottom:32px;}
+.job:last-child{padding-bottom:0;}
+.job::before{content:""; position:absolute; left:-26px; top:6px; width:9px; height:9px; border-radius:50%; background:var(--accent);}
+.job .when{font-family:var(--mono); font-size:12px; color:var(--ink-mute); margin-bottom:4px;}
+.job h3{font-family:var(--display); font-weight:500; font-size:20px; margin:0 0 2px;}
+.job .role{font-size:14px; color:var(--accent); margin:0 0 10px;}
+.job p{font-size:14px; line-height:1.6; color:var(--ink-soft); margin:0; max-width:60ch;}
+ 
+/* ---------- EDUCATION ---------- */
+.edu{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px;}
+.edu-card{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:22px 24px;}
+.edu-card .when{font-family:var(--mono); font-size:12px; color:var(--ink-mute); margin-bottom:8px;}
+.edu-card h3{font-family:var(--display); font-weight:500; font-size:18px; margin:0 0 2px;}
+.edu-card .deg{font-size:14px; color:var(--ink-soft); margin:0;}
+ 
+/* ---------- SKILLS ---------- */
+.skills{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px;}
+.skill{background:var(--card); border:1px solid var(--line); border-radius:4px; padding:18px 20px;}
+.skill .k{font-family:var(--mono); font-size:11px; letter-spacing:0.08em; color:var(--ink-mute); margin-bottom:10px;}
+.skill .v{font-size:14px; line-height:1.9; color:var(--ink-soft);}
+ 
+/* ---------- CONTACT ---------- */
+.contact{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+.contact h2{font-family:var(--display); font-weight:500; font-size:22px; margin:0 0 4px;}
+.contact .mail{font-size:15px; color:var(--accent); text-decoration:none;}
+.contact .mail:hover{text-decoration:underline;}
+footer{padding:32px 0 48px; font-family:var(--mono); font-size:12px; color:var(--ink-mute);}
+ 
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+ 
+@media (max-width:640px){
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  .kpi:nth-child(3n){border-right:1px solid var(--line);}
+  .kpi:nth-child(2n){border-right:none;}
+  .pdr{grid-template-columns:1fr; gap:16px;}
+}
+ 
+/* Scroll reveal + hero load-in (auto-disabled for reduced motion) */
+@media (prefers-reduced-motion:no-preference){
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+}
+</style>
 </head>
 <body>
-  <h1>Deeksha Singh</h1>
-  <p>Portfolio coming soon.</p>
+ 
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap">
+    <p class="name reveal">Deeksha Singh</p>
+    <h1 class="reveal">I build data systems that drive product and business decisions.</h1>
+    <p class="lead reveal">Analytics leader working at the intersection of data science and product — from demand forecasting to AI agents to the dashboards teams actually use.</p>
+    <div class="links reveal">
+      <!-- EDIT: your real LinkedIn + GitHub URLs -->
+      <a class="btn" href="https://www.linkedin.com/in/YOUR-LINKEDIN" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 9.5H5.67V18h2.67V9.5zM7 6.13a1.55 1.55 0 1 0 0 3.1 1.55 1.55 0 0 0 0-3.1zM18.34 18v-4.67c0-2.5-1.34-3.66-3.12-3.66-1.44 0-2.08.79-2.44 1.35v-1.52h-2.67V18h2.67v-4.55c0-1.2.23-2.36 1.71-2.36 1.46 0 1.48 1.37 1.48 2.44V18h2.67z"/></svg>
+        LinkedIn
+      </a>
+      <a class="btn" href="https://github.com/YOUR-GITHUB" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+        GitHub
+      </a>
+    </div>
+ 
+    <!-- KPI strip — numbers count up on scroll -->
+    <div class="kpis reveal">
+      <div class="kpi c-amber"><div class="num" data-target="95" data-suffix="%">0</div><div class="lbl">forecast accuracy</div></div>
+      <div class="kpi c-green"><div class="num" data-target="100" data-prefix="$" data-suffix="K+">0</div><div class="lbl">incremental profit</div></div>
+      <div class="kpi c-blue"><div class="num" data-target="300" data-suffix="+">0</div><div class="lbl">SKUs forecasted</div></div>
+      <div class="kpi c-violet"><div class="num" data-target="50" data-suffix="+">0</div><div class="lbl">dashboard users</div></div>
+      <div class="kpi c-coral"><div class="num" data-target="20" data-suffix="+">0</div><div class="lbl">data sources integrated</div></div>
+      <!-- EDIT: confirm years of experience -->
+      <div class="kpi c-teal"><div class="num" data-target="6" data-suffix="+">0</div><div class="lbl">years in analytics</div></div>
+    </div>
+  </div>
+</header>
+ 
+<!-- ================= ABOUT ================= -->
+<section class="about">
+  <div class="wrap">
+    <p class="eyebrow reveal">About</p>
+    <!-- DRAFT: a starting point in your voice — edit freely -->
+    <p class="reveal" style="margin-bottom:20px;">I started in analytics chasing one question: how do you turn messy data into a decision someone can actually act on? That question carried me from early analyst work into owning the full stack behind an ecommerce business — forecasting, experimentation, dashboards, and lately AI agents that put answers directly in people's hands.</p>
+    <p class="reveal">What pulls at me is the point where data meets a real choice. I like owning a problem the whole way through: framing what is worth solving, building the thing, and staying close enough to the outcome to know whether it worked. I am now looking to do that at greater scale and closer to product, where the questions are bigger and the impact compounds.</p>
+  </div>
+</section>
+ 
+<!-- ================= SELECTED WORK ================= -->
+<section class="divide">
+  <div class="wrap">
+    <p class="eyebrow reveal">Selected work</p>
+    <div class="projects">
+ 
+      <article class="project feature c-blue reveal">
+        <!-- EDIT: to use a real screenshot instead, replace this whole <div class="thumb"> with:
+             <div class="thumb"><img src="dashboard.png" alt="Amazon dashboard" style="width:100%;height:100%;object-fit:cover"></div> -->
+        <div class="thumb">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="10" width="32" height="28" rx="2"/>
+            <line x1="8" y1="18" x2="40" y2="18"/>
+            <line x1="16" y1="32" x2="16" y2="26"/>
+            <line x1="24" y1="32" x2="24" y2="23"/>
+            <line x1="32" y1="32" x2="32" y2="28"/>
+          </svg>
+        </div>
+        <div class="tagrow"><span class="badge-pc">Product case study</span><span class="stack">Streamlit · Power BI · PostgreSQL · dbt</span></div>
+        <h3>Amazon market intelligence dashboard</h3>
+        <p class="lead2">A decision tool for the category managers who set pricing and reorder calls on Amazon — built to replace scattered tabs and gut feel with one shared view.</p>
+        <div class="pdr">
+          <div><div class="k">THE USER</div><p>Category managers deciding what to price, promote, and reorder, with no single place to see where a product stood against its competitors.</p></div>
+          <div><div class="k">THE TRADEOFF</div><p>Instead of tracking every possible metric, I scoped to the few signals that actually move a decision: competitive price, BSR to sales, review sentiment, and true margin.</p></div>
+          <div><div class="k hl">THE OUTCOME</div><p>Pricing and inventory calls now start from one dashboard and shared evidence rather than separate spreadsheets.</p></div>
+        </div>
+        <div class="narrative">
+          <p><strong>What I weighed.</strong> Off the shelf tools existed but were costly, generic, and could not fold in our own margin math. Building it myself meant I could bake in true margin contribution, subtracting creator commissions from reported figures, so a number on the screen mapped to a real decision. I shipped locally on Streamlit first to move fast and sidestep hosting and permission concerns, keeping cloud hosting as a later step once the tool earned it.</p>
+          <p class="next">What's next: AWS hosting · price and rank alerting · expanding past kitchen scales into adjacent categories</p>
+        </div>
+      </article>
+ 
+      <article class="project c-teal reveal">
+        <div class="thumb">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 12h28a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H20l-7 6v-6h-3a2 2 0 0 1-2-2V14a2 2 0 0 1 2-2z"/>
+            <path d="M17 20l4 3-4 3"/>
+            <line x1="25" y1="26" x2="31" y2="26"/>
+          </svg>
+        </div>
+        <div class="tagrow"><span class="tag">natural language → SQL</span><span class="stack">LangChain · Llama 3.1 · local LLM</span></div>
+        <h3>QueryMate</h3>
+        <div class="pdr">
+          <div><div class="k">PROBLEM</div><p>Non-technical teammates waited on analysts for routine data questions.</p></div>
+          <div><div class="k">DECISION</div><p>Ran the model locally, trading setup effort for zero cost and full data privacy.</p></div>
+          <div><div class="k hl">RESULT</div><p>A CLI that turns plain questions into SQL, freeing analyst time for real analysis.</p></div>
+        </div>
+      </article>
+ 
+      <article class="project c-amber reveal">
+        <div class="thumb">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="8 32 18 24 26 28 40 12"/>
+            <polyline points="33 12 40 12 40 19"/>
+            <circle cx="18" cy="24" r="1.7" fill="currentColor" stroke="none"/>
+            <circle cx="26" cy="28" r="1.7" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="tagrow"><span class="tag">demand forecasting</span><span class="stack">Prophet · XGBoost · Streamlit</span></div>
+        <h3>Forecasting and reorder engine</h3>
+        <div class="pdr">
+          <div><div class="k">PROBLEM</div><p>Reorder decisions across ~99 SKUs were manual and error prone.</p></div>
+          <div><div class="k">DECISION</div><p>Segmented SKUs into three tiers so effort matched each item's value.</p></div>
+          <div><div class="k hl">RESULT</div><p>95% forecast accuracy and $100K+ in incremental profit.</p></div>
+        </div>
+      </article>
+ 
+    </div>
+  </div>
+</section>
+ 
+<!-- ================= MORE PROJECTS ================= -->
+<section class="divide">
+  <div class="wrap">
+    <p class="eyebrow reveal">More on GitHub</p>
+    <div class="grid">
+      <!-- EDIT: confirm each github.com/USERNAME/REPO link points to your account -->
+ 
+      <a class="mini c-coral reveal" href="https://github.com/iamdwightschrute/Mental-Health-in-Tech-Analysis" target="_blank" rel="noopener">
+        <span class="glyph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="8" y1="40" x2="40" y2="40"/><line x1="14" y1="40" x2="14" y2="28"/><line x1="24" y1="40" x2="24" y2="18"/><line x1="34" y1="40" x2="34" y2="24"/></svg></span>
+        <span class="mtag">Tableau · analytics</span>
+        <h4>Mental health in tech</h4>
+        <p>Descriptive, predictive, and prescriptive analysis of a survey on mental health in the tech industry.</p>
+        <span class="go">View repo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span>
+      </a>
+ 
+      <a class="mini c-violet reveal" href="https://github.com/iamdwightschrute/California-University-Crime-Data" target="_blank" rel="noopener">
+        <span class="glyph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20a6 6 0 1 1 12 0c0 5-6 11-6 11s-6-6-6-11z"/><circle cx="24" cy="20" r="2" fill="currentColor" stroke="none"/><path d="M10 38h28"/></svg></span>
+        <span class="mtag">D3.js · data viz</span>
+        <h4>California campus crime</h4>
+        <p>Interactive D3.js dashboard visualizing 2015 crime data across California campuses, highlighting crime types and safety.</p>
+        <span class="go">View repo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span>
+      </a>
+ 
+      <a class="mini c-green reveal" href="https://github.com/iamdwightschrute/Accident-Severity-Analysis-EDA" target="_blank" rel="noopener">
+        <span class="glyph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 8v32h30"/><circle cx="18" cy="30" r="2.4" fill="currentColor" stroke="none"/><circle cx="26" cy="22" r="2.4" fill="currentColor" stroke="none"/><circle cx="24" cy="34" r="2.4" fill="currentColor" stroke="none"/><circle cx="33" cy="16" r="2.4" fill="currentColor" stroke="none"/><circle cx="31" cy="27" r="2.4" fill="currentColor" stroke="none"/></svg></span>
+        <span class="mtag">Python · EDA</span>
+        <h4>Accident severity analysis</h4>
+        <p>Exploratory data analysis in Jupyter examining the factors that drive accident severity.</p>
+        <span class="go">View repo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span>
+      </a>
+ 
+      <a class="mini c-blue reveal" href="https://github.com/iamdwightschrute/Pathogen-Detection-Salmonella-Enterica" target="_blank" rel="noopener">
+        <span class="glyph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="14" y1="14" x2="30" y2="22"/><line x1="30" y1="22" x2="16" y2="34"/><line x1="30" y1="22" x2="36" y2="36"/><circle cx="14" cy="14" r="4" fill="var(--card)"/><circle cx="30" cy="22" r="4" fill="var(--card)"/><circle cx="16" cy="34" r="4" fill="var(--card)"/><circle cx="36" cy="36" r="4" fill="var(--card)"/></svg></span>
+        <span class="mtag">Python · ML</span>
+        <h4>Pathogen detection</h4>
+        <p>Machine learning notebook for detecting Salmonella Enterica, applying classification to biological data.</p>
+        <span class="go">View repo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span>
+      </a>
+ 
+      <!-- EDIT: this repo had no description — add one line that describes it -->
+      <a class="mini c-amber reveal" href="https://github.com/iamdwightschrute/Hotel-Heaven-DBMS" target="_blank" rel="noopener">
+        <span class="glyph"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="11" width="30" height="26" rx="2"/><line x1="9" y1="20" x2="39" y2="20"/><line x1="9" y1="28" x2="39" y2="28"/><line x1="24" y1="20" x2="24" y2="37"/></svg></span>
+        <span class="mtag">SQL · DBMS</span>
+        <h4>Hotel Heaven DBMS</h4>
+        <p>A relational database management system project modelling hotel operations and bookings.</p>
+        <span class="go">View repo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg></span>
+      </a>
+ 
+    </div>
+  </div>
+</section>
+ 
+<!-- ================= ASK MY PORTFOLIO ================= -->
+<section class="divide">
+  <div class="wrap">
+    <p class="eyebrow reveal">Ask my portfolio</p>
+    <div class="ask-box reveal">
+      <div class="ask-input">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="q" type="text" value="What has Deeksha built?" aria-label="Ask a question about this portfolio" onkeydown="if(event.key==='Enter')answer()">
+        <button onclick="answer()">Ask</button>
+      </div>
+      <div class="chips">
+        <button class="chip" onclick="fill('List her skills')">Skills</button>
+        <button class="chip" onclick="fill('Tell me about her forecasting work')">Forecasting</button>
+        <button class="chip" onclick="fill('What has she built with AI and LLMs?')">AI &amp; LLMs</button>
+        <button class="chip" onclick="fill('Walk me through her experience')">Experience</button>
+        <button class="chip" onclick="fill('How can I reach her?')">Contact</button>
+      </div>
+      <div class="answer" id="answer">Quite a lot. Her strongest work spans a demand forecasting engine (95% accuracy across 300+ SKUs), an AI agent that turns plain questions into SQL, and BI dashboards used by 50+ people. Ask about any of them.</div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ================= EXPERIENCE ================= -->
+<section class="divide">
+  <div class="wrap">
+    <p class="eyebrow reveal">Experience</p>
+    <div class="timeline">
+      <!-- EDIT: confirm all dates and titles below -->
+ 
+      <div class="job reveal">
+        <div class="when">2024 — Present</div>
+        <h3>Greater Goods (DMD Brands)</h3>
+        <p class="role">Analytics Manager</p>
+        <p>I own the analytics stack end to end for a sizable ecommerce business. In a given week that means tightening demand forecasts across hundreds of products, running experiments to settle a debate with evidence, keeping the PostgreSQL warehouse and dbt models healthy, and shipping Power BI dashboards people across the company actually open. Lately I have been building AI agents so non technical teammates can get answers without waiting on me. The thread through all of it: turning scattered data into decisions the business can move on.</p>
+      </div>
+ 
+      <div class="job reveal">
+        <div class="when">2020 — 2024</div>
+        <h3>Firework TV</h3>
+        <p class="role">Data Analyst</p>
+        <p>I led analysis for new integrations and product launches, owning the metrics that told us whether something was working. Much of the job was translation: taking a tangle of data and handing stakeholders and executives a clear recommendation they could act on. It is where I learned that the analysis only matters if the story around it lands, and where I got comfortable working across teams to make that happen.</p>
+      </div>
+ 
+      <div class="job reveal">
+        <div class="when">2020</div>
+        <h3>Zoho</h3>
+        <p class="role">Data Analyst</p>
+        <p>An early chapter where I got hands on with real business reporting and learned how analytics supports a product day to day. Short, but it pointed me toward everything that came after.</p>
+      </div>
+ 
+    </div>
+  </div>
+</section>
+ 
+<!-- ================= EDUCATION ================= -->
+<section class="divide">
+  <div class="wrap">
+    <p class="eyebrow reveal">Education</p>
+    <div class="edu">
+      <div class="edu-card reveal">
+        <div class="when">2021 — 2023</div>
+        <h3>University of Massachusetts, Boston</h3>
+        <p class="deg">M.S. Business Analytics (Big Data)</p>
+      </div>
+      <div class="edu-card reveal">
+        <div class="when">2016 — 2020</div>
+        <h3>University of Mumbai</h3>
+        <p class="deg">B.E. Computer Science</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ================= SKILLS ================= -->
+<section class="divide">
+  <div class="wrap">
+    <p class="eyebrow reveal">Skills</p>
+    <!-- EDIT: trim or add to any list so it matches your real stack -->
+    <div class="skills">
+      <div class="skill reveal"><div class="k">AI & ML</div><div class="v">LangChain · RAG agents · Ollama / Llama · Prophet · XGBoost</div></div>
+      <div class="skill reveal"><div class="k">LANGUAGES</div><div class="v">Python · SQL · R · DAX · Bash</div></div>
+      <div class="skill reveal"><div class="k">DATA & ANALYTICS</div><div class="v">PostgreSQL · dbt · forecasting · A/B testing · EDA</div></div>
+      <div class="skill reveal"><div class="k">BI & VIZ</div><div class="v">Power BI · Tableau · Streamlit · D3.js · Matplotlib</div></div>
+      <div class="skill reveal"><div class="k">CLOUD & INFRA</div><div class="v">AWS · data warehousing · DBeaver · Git · conda</div></div>
+      <div class="skill reveal"><div class="k">DOMAINS</div><div class="v">Ecommerce · Amazon marketplace · supply chain · retail · pricing</div></div>
+      <div class="skill reveal"><div class="k">LEADERSHIP</div><div class="v">Cross-team collaboration · stakeholder management · mentoring · data storytelling</div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ================= CONTACT ================= -->
+<section class="divide">
+  <div class="wrap contact">
+    <div>
+      <h2>Let's talk.</h2>
+      <!-- EDIT: your email -->
+      <a class="mail" href="mailto:your.email@example.com">your.email@example.com</a>
+    </div>
+    <div class="links">
+      <a class="btn" href="https://www.linkedin.com/in/YOUR-LINKEDIN" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/YOUR-GITHUB" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+ 
+<footer>
+  <div class="wrap">© <span id="yr"></span> Deeksha Singh</div>
+</footer>
+ 
+<script>
+/* ============================================================
+   "Ask my portfolio" — keyword-matched answers, no server needed.
+   EDIT the text below to change what it says.
+   ============================================================ */
+/* ============================================================
+   "Ask my portfolio" — a small retrieval engine, no server needed.
+   It scores any question against the knowledge base below and
+   returns the best match, so wording doesn't have to be exact.
+   EDIT: add/adjust entries. Each has trigger words + an answer.
+   ============================================================ */
+var KB = [
+  { t:["skill","skills","stack","tech","technology","tool","tools","language","languages","proficient","know","expertise","capable","do you","can she do","good at"],
+    a:"Her stack spans several areas — AI &amp; ML (LangChain, RAG agents, Llama, Prophet, XGBoost), languages (Python, SQL, R, DAX), data &amp; analytics (PostgreSQL, dbt, forecasting, A/B testing), BI &amp; viz (Power BI, Tableau, Streamlit, D3.js), and cloud (AWS). Full breakdown is in the Skills section below." },
+  { t:["forecast","forecasting","demand","prophet","xgboost","reorder","predict","prediction","predictive","inventory","sku","skus"],
+    a:"She built a forecasting and reorder engine (Prophet plus XGBoost) across ~99 SKUs with three tier segmentation, reaching 95% accuracy and driving $100K+ in incremental profit." },
+  { t:["ai","llm","llms","langchain","agent","agents","llama","rag","nlp","querymate","natural language","gpt","model","chatbot","genai"],
+    a:"She built QueryMate, an agent that turns plain English into SQL using a locally run Llama model and LangChain. Running it locally meant zero API cost and full data privacy — a deliberate tradeoff." },
+  { t:["dashboard","dashboards","power bi","powerbi","bi","tableau","visual","visualization","viz","streamlit","report","reporting","d3"],
+    a:"She ships BI dashboards used by 50+ people, built in Power BI and Tableau on a PostgreSQL warehouse, plus interactive tools in Streamlit and D3.js." },
+  { t:["amazon","marketplace","market intelligence","pricing","ecommerce","e-commerce","seller","competitor","retail","product case"],
+    a:"Her Amazon market intelligence dashboard is a decision tool for category managers: it unifies competitor price, rank, review sentiment, and true margin into one view so pricing and reorder calls start from shared evidence. It's written up as a product case study above." },
+  { t:["experience","work","worked","job","jobs","career","company","companies","greater goods","firework","zoho","employer","history","currently"],
+    a:"She's currently an Analytics Manager at Greater Goods, owning the full analytics stack for an ecommerce business. Before that she was a Data Analyst at Firework TV and, earlier, at Zoho. See the Experience section for detail." },
+  { t:["education","degree","degrees","study","studied","university","school","college","master","masters","bachelor","mumbai","umass","boston","qualification","academic"],
+    a:"She holds an M.S. in Business Analytics (Big Data) from the University of Massachusetts, Boston, and a B.E. in Computer Science from the University of Mumbai." },
+  { t:["product","pm","product manager","product management","fit","suited","transition"],
+    a:"She sits right at the data and product intersection: she doesn't just build models, she decides what's worth building, frames the tradeoff, and ties the work to a measurable outcome — the core of product thinking." },
+  { t:["project","projects","built","build","made","created","portfolio","github","repo","repos"],
+    a:"Her main work: a forecasting and reorder engine, QueryMate (natural language to SQL), and an Amazon market intelligence dashboard — plus GitHub projects spanning Tableau analytics, a D3.js crime dashboard, EDA, ML, and a database system. They're all above." },
+  { t:["contact","reach","email","hire","hiring","connect","touch","available","message","linkedin"],
+    a:"The fastest way to reach her is email or LinkedIn — both are linked at the bottom of the page." },
+  { t:["who","about","background","bio","summary","herself","tell me about","introduce"],
+    a:"She started in analytics turning messy data into decisions, grew into owning a full analytics stack for an ecommerce business, and is now moving toward larger scale and product. More in the About section up top." },
+  { t:["relocate","relocating","relocation","remote","location","based","where","move","moving","willing"],
+    a:"She's open to relocation for the right opportunity. Reach out via the links at the bottom to talk specifics." },
+  { t:["experience years","years","how long","tenure","senior"],
+    a:"She has 6+ years across analytics and ecommerce, from analyst roles into analytics management." }
+];
+var FALLBACK = "Good question — I can answer about her skills, projects, experience, education, product fit, or how to get in touch. Try asking one of those, or tap a suggestion below.";
+ 
+var STOP = {the:1,a:1,an:1,of:1,to:1,is:1,are:1,her:1,she:1,his:1,he:1,for:1,and:1,or:1,me:1,my:1,i:1,you:1,what:1,whats:1,tell:1,show:1,list:1,down:1,about:1,do:1,does:1,did:1,can:1,could:1,would:1,give:1,any:1,some:1,all:1,please:1};
+ 
+function fill(text){ document.getElementById('q').value = text; answer(); }
+ 
+function answer(){
+  var raw = document.getElementById('q').value.toLowerCase().trim();
+  if(!raw){ document.getElementById('answer').innerHTML = FALLBACK; return; }
+  // tokenise the question, dropping tiny/stop words
+  var toks = raw.split(/[^a-z0-9]+/).filter(function(w){ return w.length>1 && !STOP[w]; });
+  var best=null, bestScore=0;
+  KB.forEach(function(entry){
+    var score=0;
+    entry.t.forEach(function(term){
+      // multi-word phrase present in the question → strong signal
+      if(term.indexOf(' ')>-1){ if(raw.indexOf(term)>-1) score += 3; return; }
+      // single word: match against question tokens
+      toks.forEach(function(w){
+        if(w===term) score += 2;
+        else if(w.length>3 && (w.indexOf(term)>-1 || term.indexOf(w)>-1)) score += 1;
+      });
+    });
+    if(score>bestScore){ bestScore=score; best=entry; }
+  });
+  document.getElementById('answer').innerHTML = (best && bestScore>0) ? best.a : FALLBACK;
+}
+ 
+document.getElementById('yr').textContent = new Date().getFullYear();
+ 
+/* ---------- Motion: scroll reveal + KPI count-up ---------- */
+var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ 
+if(reduce){
+  document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+} else {
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+ 
+  var counted = false;
+  var kio = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !counted){
+        counted = true;
+        document.querySelectorAll('.kpi .num').forEach(function(el){
+          var target = +el.dataset.target, pre = el.dataset.prefix||'', suf = el.dataset.suffix||'', start = null;
+          function step(t){
+            if(!start) start = t;
+            var p = Math.min((t-start)/900, 1);
+            el.textContent = pre + Math.round(p*target) + suf;
+            if(p<1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        });
+      }
+    });
+  }, {threshold:0.4});
+  var strip = document.querySelector('.kpis');
+  if(strip) kio.observe(strip);
+}
+</script>
+ 
 </body>
 </html>
+ 
